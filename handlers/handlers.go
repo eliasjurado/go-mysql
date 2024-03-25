@@ -48,15 +48,12 @@ func GetOneContact(db *sql.DB, id int) {
 
 	c := models.Contact{}
 
-
-
 	log.Printf("%v\n", "Lista de Contacto")
 	log.Printf("%v\n", "------------------")
 	var valueEmail sql.NullString
 	var valuePhone sql.NullString
 	err := row.Scan(&c.Id, &c.Name, &valueEmail, &valuePhone)
 
-	
 	if valueEmail.Valid {
 		c.Email = valueEmail.String
 	} else {
@@ -96,4 +93,14 @@ func UpdateContact(db *sql.DB, c models.Contact) {
 		log.Fatal(err)
 	}
 	log.Printf("%s\n", "Contacto actualizado con éxito")
+}
+
+func DeleteContact(db *sql.DB, id int) {
+	query := "delete from contact where id=?"
+
+	_, err := db.Exec(query, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("%s\n", "Contacto eliminado con éxito")
 }

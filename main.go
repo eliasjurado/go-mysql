@@ -26,4 +26,5 @@ func main() {
 	handlers.UpdateContact(db,contact)
 	handlers.GetAllContacts(db)
 	handlers.GetOneContact(db,6)
+	handlers.DeleteContact(db,6)
 }
