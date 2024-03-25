@@ -18,4 +18,5 @@ func main() {
 	defer db.Close()
 
 	handlers.GetAllContacts(db)
+	handlers.GetOneContact(db,6)
 }
