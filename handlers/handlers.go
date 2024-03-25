@@ -18,10 +18,28 @@ func GetAllContacts(db *sql.DB) {
 	log.Printf("%+v\n", "------------------")
 	for rows.Next() {
 		c := models.Contact{}
-		err := rows.Scan(&c.Id, &c.Name, &c.Email, &c.Phone)
+
+		var valueEmail sql.NullString
+		var valuePhone sql.NullString
+		err := rows.Scan(&c.Id, &c.Name, &valueEmail, &valuePhone)
 		if err != nil {
 			log.Fatal(err)
-		}		
+		}	
+		
+		if valueEmail.Valid{
+			c.Email=valueEmail.String
+		}else{
+			c.Email=""
+		}
+
+		if valuePhone.Valid{
+			c.Phone=valuePhone.String
+		}else{
+			c.Phone=""
+		}
+
+
+
 		log.Printf("%+v\n", c.Id, c.Name, c.Email, c.Phone)
 	}
 	log.Printf("%+v\n", "------------------")
