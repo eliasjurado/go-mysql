@@ -48,8 +48,15 @@ func GetOneContact(db *sql.DB, id int) {
 
 	c := models.Contact{}
 
+
+
+	log.Printf("%v\n", "Lista de Contacto")
+	log.Printf("%v\n", "------------------")
 	var valueEmail sql.NullString
 	var valuePhone sql.NullString
+	err := row.Scan(&c.Id, &c.Name, &valueEmail, &valuePhone)
+
+	
 	if valueEmail.Valid {
 		c.Email = valueEmail.String
 	} else {
@@ -61,11 +68,6 @@ func GetOneContact(db *sql.DB, id int) {
 	} else {
 		c.Phone = ""
 	}
-
-	log.Printf("%v\n", "Lista de Contacto")
-	log.Printf("%v\n", "------------------")
-
-	err := row.Scan(&c.Id, &c.Name, &valueEmail, &valuePhone)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			log.Fatalf("No se encontró ningún contacto con el ID %d", id)
@@ -84,4 +86,14 @@ func CreateContact(db *sql.DB, c models.Contact) {
 		log.Fatal(err)
 	}
 	log.Printf("%s\n", "Nuevo contacto registrado con éxito")
+}
+
+func UpdateContact(db *sql.DB, c models.Contact) {
+	query := "update contact set name =?, email=?, phone=? where id=?"
+
+	_, err := db.Exec(query, c.Name, c.Email, c.Phone, c.Id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("%s\n", "Contacto actualizado con éxito")
 }

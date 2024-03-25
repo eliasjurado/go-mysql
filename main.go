@@ -18,11 +18,12 @@ func main() {
 
 	defer db.Close()
 	contact := models.Contact{
-		Name: "Hugo Ascencios",
-		Email: "vigo@gmail.com",
-		Phone: "+51987453723",
+		Id: "6",
+		Name: "Hugo Ormeño",
+		Email: "vigodelperu@gmail.com",
+		Phone: "+51987453666",
 	}
-	handlers.CreateContact(db,contact)
+	handlers.UpdateContact(db,contact)
 	handlers.GetAllContacts(db)
 	handlers.GetOneContact(db,6)
 }
