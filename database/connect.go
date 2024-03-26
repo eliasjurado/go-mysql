@@ -37,3 +37,7 @@ func Connect() (*sql.DB, error) {
 	log.Printf("%+v\n", "conexion exitosa")
 	return db, nil
 }
+
+func CreateTable(db *sql.DB, schema string)  {
+	db.Exec(schema)
+}
